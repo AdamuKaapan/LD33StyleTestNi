@@ -5,6 +5,8 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Main extends HvlTemplateInteg2D {
 
+	public static final int playerTextureIndex = 1;
+	
 	public static void main(String[] args) {
 		new Main();
 	}
@@ -17,6 +19,8 @@ public class Main extends HvlTemplateInteg2D {
 	public void initialize(){
 		
 		MenuManager.initialize();
+		
+		getTextureLoader().loadResource("Player");
 	}
 
 	@Override
