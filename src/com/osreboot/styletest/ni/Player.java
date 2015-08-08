@@ -28,7 +28,7 @@ public class Player {
 
 	public static void draw(float delta) {
 		HvlPainter2D.hvlRotate(x, y, theta);
-		HvlPainter2D.hvlDrawQuad(x - (playerSize / 2), y - (playerSize / 2), playerSize, playerSize, HvlTemplateInteg2D.getTexture(Main.playerTextureIndex));
+		HvlPainter2D.hvlDrawQuad(x - (playerSize / 2), y - (playerSize / 2), playerSize, playerSize, HvlTemplateInteg2D.getTexture(Main.playerIndex));
 		HvlPainter2D.hvlResetRotation();
 	}
 	

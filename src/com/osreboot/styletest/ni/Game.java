@@ -1,10 +1,5 @@
 package com.osreboot.styletest.ni;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
-import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 import com.osreboot.ridhvl.tile.HvlLayeredTileMap;
 
 public class Game {
