@@ -24,8 +24,8 @@ public class Player {
 	private static HvlCoord velocity;
 	
 	public static void reset() {
-		x = 0;
-		y = 0;
+		x = 5 * Game.map.getTileWidth() + (playerSize / 2);
+		y = 6 * Game.map.getTileHeight() + (playerSize / 2);
 		velocity = new HvlCoord(0, 0);
 		theta = 90;
 	}
@@ -63,6 +63,23 @@ public class Player {
 		{
 			velocity.normalize();
 			velocity.mult(maxVel);
+		}
+		
+		if (Game.isTileInLocation(x, y + (playerSize / 2), 1))
+		{
+			velocity.y *= -1;
+		}
+		if (Game.isTileInLocation(x, y - (playerSize / 2), 1))
+		{
+			velocity.y *= -1;
+		}
+		if (Game.isTileInLocation(x + (playerSize / 2), y, 1))
+		{
+			velocity.x *= -1;
+		}
+		if (Game.isTileInLocation(x - (playerSize / 2), y, 1))
+		{
+			velocity.x *= -1;
 		}
 		
 		x += velocity.x * delta;
