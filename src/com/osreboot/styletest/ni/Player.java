@@ -1,7 +1,5 @@
 package com.osreboot.styletest.ni;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
-
 import com.osreboot.ridhvl.HvlCoord;
 import com.osreboot.ridhvl.input.HvlInputSeriesAction;
 import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
@@ -12,6 +10,7 @@ public class Player {
 	public static final float playerSize = 64f;
 	public static final float accel = 256f;
 	public static final float motionDecay = -0.25f, stationaryDecay = -1f;
+	public static final float rotDecay = -2f;
 	
 	public static final float maxRot = 135f;
 	
@@ -20,6 +19,7 @@ public class Player {
 	private static float x, y;
 	
 	private static float theta;
+	private static float rotVel;
 	
 	private static HvlCoord velocity;
 	
@@ -35,7 +35,10 @@ public class Player {
 		float xIn = HvlInputSeriesAction.RIGHT.getCurrentOutput() - HvlInputSeriesAction.LEFT.getCurrentOutput();
 		float yIn = HvlInputSeriesAction.DOWN.getCurrentOutput() - HvlInputSeriesAction.UP.getCurrentOutput();
 		
-		theta += Math.min(maxRot, Math.max(-maxRot, xIn * velocity.length())) * delta;
+		rotVel += xIn * delta;
+		rotVel = Math.min(Math.max(rotVel, -maxVel), rotVel);
+		rotVel *= Math.pow(Math.E, delta * rotDecay);
+		theta += Math.min(maxRot, Math.max(-maxRot, rotVel * velocity.length())) * delta;
 		
 		HvlCoord motion = new HvlCoord((float)Math.cos(Math.toRadians(theta + 90)) * yIn, (float)Math.sin(Math.toRadians(theta + 90)) * yIn);
 		motion.normalize();
