@@ -7,7 +7,7 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Player {
 
-	public static final float playerSize = 64f;
+	public static final float playerSize = 48f;
 	public static final float accel = 256f;
 	public static final float motionDecay = -0.5f, stationaryDecay = -1f;
 	public static final float rotDecay = -2f;

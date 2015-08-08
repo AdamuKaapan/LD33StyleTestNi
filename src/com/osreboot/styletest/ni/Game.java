@@ -31,7 +31,7 @@ public class Game {
 				sb.append(current);
 				sb.append(System.lineSeparator());
 			}
-			Game.map = HvlLayeredTileMap.load(sb.toString(), HvlTemplateInteg2D.getTexture(Main.tilemapIndex), 0, 0, 128, 128);
+			Game.map = HvlLayeredTileMap.load(sb.toString(), HvlTemplateInteg2D.getTexture(Main.tilemapIndex), 0, 0, 64, 64);
 			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();

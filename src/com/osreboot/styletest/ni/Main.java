@@ -21,6 +21,7 @@ public class Main extends HvlTemplateInteg2D {
 		getTextureLoader().loadResource("Player");
 		getTextureLoader().loadResource("Tilesheet");
 		
+		Game.setCurrentLevel("TestLevel.map");
 		Game.initialize();
 		
 		MenuManager.initialize();
