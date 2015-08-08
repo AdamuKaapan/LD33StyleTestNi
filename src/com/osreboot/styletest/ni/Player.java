@@ -9,7 +9,7 @@ public class Player {
 
 	public static final float playerSize = 64f;
 	public static final float accel = 256f;
-	public static final float motionDecay = -0.25f, stationaryDecay = -1f;
+	public static final float motionDecay = -0.5f, stationaryDecay = -1f;
 	public static final float rotDecay = -2f;
 	
 	public static final float maxRot = 135f;

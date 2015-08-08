@@ -5,7 +5,7 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Main extends HvlTemplateInteg2D {
 
-	public static final int fontIndex = 0, playerIndex = 0;
+	public static final int fontIndex = 0, playerIndex = 0, tilemapIndex = 1;
 	
 	public static void main(String[] args) {
 		new Main();
@@ -19,8 +19,9 @@ public class Main extends HvlTemplateInteg2D {
 	public void initialize(){
 //		getTextureLoader().loadResource("Font");
 		getTextureLoader().loadResource("Player");
+		getTextureLoader().loadResource("Tilesheet");
 		
-		Game.reset();
+		Game.initialize();
 		
 		MenuManager.initialize();
 	}

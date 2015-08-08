@@ -1,5 +1,15 @@
 package com.osreboot.styletest.ni;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import org.newdawn.slick.Color;
+
+import com.osreboot.ridhvl.painter.HvlCamera;
+import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
+import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
+import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 import com.osreboot.ridhvl.tile.HvlLayeredTileMap;
 
 public class Game {
@@ -13,28 +23,33 @@ public class Game {
 	}
 
 	public static void initialize() {
-//		try {
-//			BufferedReader reader = new BufferedReader(new FileReader("res/" + currentLevel));
-//			StringBuilder sb = new StringBuilder();
-//			String current;
-//			while ((current = reader.readLine()) != null) {
-//				sb.append(current);
-//				sb.append(System.lineSeparator());
-//			}
-//			Game.map = HvlLayeredTileMap.load(sb.toString(), HvlTemplateInteg2D.getTexture(2), 0, 0, 128, 128);
-//			reader.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("res/" + currentLevel));
+			StringBuilder sb = new StringBuilder();
+			String current;
+			while ((current = reader.readLine()) != null) {
+				sb.append(current);
+				sb.append(System.lineSeparator());
+			}
+			Game.map = HvlLayeredTileMap.load(sb.toString(), HvlTemplateInteg2D.getTexture(Main.tilemapIndex), 0, 0, 128, 128);
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		reset();
 	}
 
 	public static void update(float delta) {
 		Player.update(delta);
+
+		HvlCamera.setAlignment(HvlCameraAlignment.CENTER);
+		HvlCamera.setPosition(Player.getX(), Player.getY());
 	}
 	
 	public static void draw(float delta) {
+		map.draw(delta);
+		HvlPainter2D.hvlDrawQuad(-32, -32, 64, 64, Color.magenta);
 		Player.draw(delta);
 	}
 
