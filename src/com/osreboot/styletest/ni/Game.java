@@ -1,5 +1,7 @@
 package com.osreboot.styletest.ni;
 
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.*;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -146,12 +148,24 @@ public class Game {
 		if (nextC >= checkpoints.size()) nextC = 0;
 		List<Checkpoint> next = checkpoints.get(nextC);
 		
+		float averagex = 0, averagey = 0;
+		int count = 0;
+		
 		for (Checkpoint c : current)
 		{
 			float x = c.x * map.getTileWidth();
 			float y = c.y * map.getTileHeight();
 			HvlPainter2D.hvlDrawQuad(x, y, map.getTileWidth(), map.getTileHeight(), 0, 0, 0.5f, 1, HvlTemplateInteg2D.getTexture(Main.waypointIndex));
+			averagex += x;
+			averagey += y;
+			count++;
 		}
+		averagex /= count;
+		averagey /= count;
+		
+		hvlRotate(Player.getX(), Player.getY(), (float)Math.toDegrees(Math.atan2(averagex - Player.getX(), Player.getY() - averagey)));
+		hvlDrawQuad(Player.getX() - 64, Player.getY() - 192, 128, 128, HvlTemplateInteg2D.getTexture(Main.pointerIndex), new Color(1, 1, 1, 0.5f));
+		hvlResetRotation();
 		
 		for (Checkpoint c : next)
 		{
