@@ -21,7 +21,7 @@ import com.osreboot.ridhvl.menu.component.HvlComponentDrawable;
 import com.osreboot.ridhvl.menu.component.HvlDrawableComponent;
 import com.osreboot.ridhvl.menu.component.HvlLabel;
 import com.osreboot.ridhvl.menu.component.HvlSpacer;
-import com.osreboot.ridhvl.menu.component.collection.HvlTextButton;
+import com.osreboot.ridhvl.menu.component.collection.HvlLabeledButton;
 import com.osreboot.ridhvl.menu.component.collection.HvlTextureDrawable;
 import com.osreboot.ridhvl.painter.HvlCamera;
 import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
@@ -49,7 +49,7 @@ public class MenuManager {
 		defaultArranger.setBorderL(16);
 		HvlComponentDefault.setDefault(defaultArranger);
 		
-		HvlTextButton defaultButton = new HvlTextButton(256, 64, new HvlTextureDrawable(Main.getTexture(Main.buttonIndex)), new HvlTextureDrawable(Main.getTexture(Main.buttonHoverIndex)), new HvlTextureDrawable(Main.getTexture(Main.buttonPressedIndex)), fontSmall, "no text d:", 2f, Color.white);
+		HvlLabeledButton defaultButton = new HvlLabeledButton(256, 64, new HvlTextureDrawable(Main.getTexture(Main.buttonIndex)), new HvlTextureDrawable(Main.getTexture(Main.buttonHoverIndex)), new HvlTextureDrawable(Main.getTexture(Main.buttonPressedIndex)), fontSmall, "no text d:", 2f, Color.white);
 		defaultButton.setxAlign(0.5f);
 		defaultButton.setyAlign(0.5f);
 		HvlComponentDefault.setDefault(defaultButton);
@@ -81,11 +81,11 @@ public class MenuManager {
 		
 		main.add(new HvlArrangerBox.Builder().build());
 		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabel.Builder().setText("lost in chrome").build());
-		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlTextButton.Builder().setText("play").setClickedCommand(new HvlButtonMenuLink(levels)).build());
+		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabeledButton.Builder().setText("play").setClickedCommand(new HvlButtonMenuLink(levels)).build());
 		
 		levels.add(new HvlArrangerBox.Builder().build());
 		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabel.Builder().setText("levels").build());
-		levels.add(new HvlTextButton.Builder().setText("previous").setClickedCommand(new OnClickedCommand(){
+		levels.add(new HvlLabeledButton.Builder().setText("previous").setClickedCommand(new OnClickedCommand(){
 			@Override
 			public void run(HvlButton arg0Arg) {
 				if(Game.levels.indexOf(Game.getCurrentLevel()) <= 0) Game.setCurrentLevel(Game.levels.get(Game.levels.size() - 1));
@@ -93,7 +93,7 @@ public class MenuManager {
 				updateMinimap();
 			}
 		}).setX((Display.getWidth()/2) - 256 - 256 - 32).setY((Display.getHeight()/2) - 32).build());
-		levels.add(new HvlTextButton.Builder().setText("next").setClickedCommand(new OnClickedCommand(){
+		levels.add(new HvlLabeledButton.Builder().setText("next").setClickedCommand(new OnClickedCommand(){
 			@Override
 			public void run(HvlButton arg0Arg) {
 				if(Game.levels.indexOf(Game.getCurrentLevel()) + 1 >= Game.levels.size()) Game.setCurrentLevel(Game.levels.get(0));
@@ -115,14 +115,14 @@ public class MenuManager {
 			}
 		}));
 		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlSpacer(0, 512 + 16));
-		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlTextButton.Builder().setText("play").setClickedCommand(new OnClickedCommand(){
+		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabeledButton.Builder().setText("play").setClickedCommand(new OnClickedCommand(){
 			@Override
 			public void run(HvlButton arg0Arg){
 				Game.initialize();
 				HvlMenu.setCurrent(game);
 			}
 		}).build());
-		levels.add(new HvlTextButton.Builder().setText("back").setX(16).setY(16).setClickedCommand(new HvlButtonMenuLink(main)).build());
+		levels.add(new HvlLabeledButton.Builder().setText("back").setX(16).setY(16).setClickedCommand(new HvlButtonMenuLink(main)).build());
 		
 		HvlMenu.setCurrent(main);
 	}
