@@ -5,7 +5,8 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Main extends HvlTemplateInteg2D {
 
-	public static final int fontIndex = 0, playerIndex = 1, tilemapIndex = 2, fontSmallIndex = 3, buttonIndex = 4, buttonHoverIndex = 5, buttonPressedIndex = 6, backgroundIndex = 7, waypointIndex = 8;
+	public static final int fontIndex = 0, playerIndex = 1, tilemapIndex = 2, fontSmallIndex = 3, buttonIndex = 4, buttonHoverIndex = 5, buttonPressedIndex = 6, backgroundIndex = 7, waypointIndex = 8,
+			pointerIndex = 9;
 	
 	public static void main(String[] args) {
 		new Main();
@@ -26,6 +27,7 @@ public class Main extends HvlTemplateInteg2D {
 		getTextureLoader().loadResource("ButtonPressed");
 		getTextureLoader().loadResource("MenuBackground");
 		getTextureLoader().loadResource("Checkpoint");
+		getTextureLoader().loadResource("Pointer");
 		
 		Game.setCurrentLevel("TestLevel.map");
 		Game.initialize();

@@ -1,5 +1,7 @@
 package com.osreboot.styletest.ni;
 
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.*;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,18 +11,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlCoord;
-import com.osreboot.ridhvl.painter.HvlCamera;
-import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
-import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
+import com.osreboot.ridhvl.menu.HvlMenu;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 import com.osreboot.ridhvl.tile.HvlLayeredTileMap;
 import com.osreboot.ridhvl.tile.HvlTile;
 import com.osreboot.ridhvl.tile.collection.HvlSimpleTile;
+//github.com/AdamuKaapan/LD33StyleTestNi.git
+import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
+import com.osreboot.ridhvl.painter.HvlCamera;
+import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
 
 public class Game {
+	public static final int requiredLaps = 2;
 
 	public static final String level1 = "TestLevel.map";
 	public static ArrayList<String> levels = new ArrayList<>();
@@ -45,9 +51,9 @@ public class Game {
 	private static int currentCheckpoint;
 	private static int currentLap;
 
-	private static float time;
-
 	private static float circleAngle;
+
+	private static float time, finished = 0;
 
 	public static void reset() {
 		Player.reset();
@@ -55,6 +61,8 @@ public class Game {
 		currentLap = 0;
 		time = 0.0f;
 		circleAngle = 0.0f;
+		time = -5f;
+		finished = 0;
 	}
 
 	public static void initialize() {
@@ -105,7 +113,17 @@ public class Game {
 	public static void update(float delta) {
 		circleAngle += 90.0f * delta;
 
-		Player.update(delta);
+		if (currentLap > requiredLaps)
+			finished += delta;
+		if (finished == 0)
+			time += delta;
+		else
+			Player.setAllowInput(false);
+		if (time > 0)
+			Player.update(delta);
+
+		if (finished > 5)
+			HvlMenu.setCurrent(MenuManager.levels);
 
 		List<Checkpoint> currentChecks = checkpoints.get(currentCheckpoint);
 
@@ -138,25 +156,51 @@ public class Game {
 			nextC = 0;
 		List<Checkpoint> next = checkpoints.get(nextC);
 
-		for (Checkpoint c : current) {
-			float x = c.x * map.getTileWidth();
-			float y = c.y * map.getTileHeight();
-			HvlPainter2D.hvlDrawQuad(x, y, map.getTileWidth(), map.getTileHeight(), 0, 0, 0.5f, 0.26f, HvlTemplateInteg2D.getTexture(Main.waypointIndex));
+		float averagex = 0, averagey = 0;
+		int count = 0;
 
-			HvlPainter2D.hvlRotate(x + (map.getTileWidth() / 2), y + (map.getTileHeight() / 2), circleAngle);
-			HvlPainter2D.hvlDrawQuad(x + (map.getTileWidth() / 2) - Checkpoint.distance, y + (map.getTileHeight() / 2) - Checkpoint.distance, Checkpoint.distance * 2, Checkpoint.distance * 2, 0,
-					0.25f, 1f, 0.75f, HvlTemplateInteg2D.getTexture(Main.waypointIndex), new Color(1, 1, 1, 0.2f));
-			HvlPainter2D.hvlResetRotation();
-		}
+		if (finished == 0) {
+			for (Checkpoint c : current) {
+				float x = c.x * map.getTileWidth();
+				float y = c.y * map.getTileHeight();
+				HvlPainter2D.hvlDrawQuad(x, y, map.getTileWidth(), map.getTileHeight(), 0, 0, 0.5f, 0.26f, HvlTemplateInteg2D.getTexture(Main.waypointIndex));
 
-		for (Checkpoint c : next) {
-			float x = c.x * map.getTileWidth();
-			float y = c.y * map.getTileHeight();
-			HvlPainter2D.hvlDrawQuad(x, y, map.getTileWidth(), map.getTileHeight(), 0.5f, 0, 1, 0.26f, HvlTemplateInteg2D.getTexture(Main.waypointIndex),
-					new Color(1, 1, 1, 0.5f));
+				HvlPainter2D.hvlRotate(x + (map.getTileWidth() / 2), y + (map.getTileHeight() / 2), circleAngle);
+				HvlPainter2D.hvlDrawQuad(x + (map.getTileWidth() / 2) - Checkpoint.distance, y + (map.getTileHeight() / 2) - Checkpoint.distance,
+						Checkpoint.distance * 2, Checkpoint.distance * 2, 0, 0.25f, 1f, 0.75f, HvlTemplateInteg2D.getTexture(Main.waypointIndex), new Color(1,
+								1, 1, 0.2f));
+				HvlPainter2D.hvlResetRotation();
+				averagex += x;
+				averagey += y;
+				count++;
+			}
+
+			averagex /= count;
+			averagey /= count;
+
+			hvlRotate(Player.getX(), Player.getY(), (float) Math.toDegrees(Math.atan2(averagex - Player.getX(), Player.getY() - averagey)));
+			hvlDrawQuad(Player.getX() - 64, Player.getY() - 192, 128, 128, HvlTemplateInteg2D.getTexture(Main.pointerIndex), new Color(1, 1, 1, 0.5f));
+			hvlResetRotation();
+
+			for (Checkpoint c : next) {
+
+				float x = c.x * map.getTileWidth();
+				float y = c.y * map.getTileHeight();
+				HvlPainter2D.hvlDrawQuad(x, y, map.getTileWidth(), map.getTileHeight(), 0.5f, 0, 1, 0.26f, HvlTemplateInteg2D.getTexture(Main.waypointIndex),
+						new Color(1, 1, 1, 0.5f));
+			}
 		}
 
 		Player.draw(delta);
+
+		if (time < 0 || finished != 0) {
+			String timer = "" + Math.round(time * 10) / 10f;
+			MenuManager.font.drawWord(timer, Player.getX() + -MenuManager.font.getLineWidth(timer), Player.getY() - 128, 2, Color.white);
+		} else {
+			String timer = "" + Math.round(time * 100) / 100f;
+			MenuManager.fontSmall
+					.drawWord(timer, Player.getX() - (Display.getWidth() / 2) + 64, Player.getY() - (Display.getHeight() / 2) + 64, 2, Color.white);
+		}
 	}
 
 	public static String getCurrentLevel() {

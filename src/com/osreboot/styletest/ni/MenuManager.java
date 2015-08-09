@@ -23,6 +23,8 @@ import com.osreboot.ridhvl.menu.component.HvlLabel;
 import com.osreboot.ridhvl.menu.component.HvlSpacer;
 import com.osreboot.ridhvl.menu.component.collection.HvlTextButton;
 import com.osreboot.ridhvl.menu.component.collection.HvlTextureDrawable;
+import com.osreboot.ridhvl.painter.HvlCamera;
+import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
 import com.osreboot.ridhvl.painter.painter2d.HvlFontPainter2D;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 import com.osreboot.ridhvl.tile.HvlLayeredTileMap;
@@ -55,14 +57,14 @@ public class MenuManager {
 		main = new HvlMenu(){
 			@Override
 			public void draw(float delta){
-				hvlDrawQuad((Display.getWidth()/2) - 640, (Display.getHeight()/2) - 360, 2048, 2048, HvlTemplateInteg2D.getTexture(Main.backgroundIndex));
+				doDefaultMenuUpdate(delta);
 				super.draw(delta);
 			}
 		};
 		levels = new HvlMenu(){
 			@Override
 			public void draw(float delta){
-				hvlDrawQuad((Display.getWidth()/2) - 640, (Display.getHeight()/2) - 360, 2048, 2048, HvlTemplateInteg2D.getTexture(Main.backgroundIndex));
+				doDefaultMenuUpdate(delta);
 				super.draw(delta);
 			}
 		};
@@ -120,6 +122,12 @@ public class MenuManager {
 	
 	public static void update(float delta){
 		HvlMenu.updateMenus(delta);
+	}
+	
+	private static void doDefaultMenuUpdate(float delta){
+		HvlCamera.setAlignment(HvlCameraAlignment.TOPLEFT);
+		HvlCamera.setPosition(0, 0);
+		hvlDrawQuad((Display.getWidth()/2) - 640, (Display.getHeight()/2) - 360, 2048, 2048, HvlTemplateInteg2D.getTexture(Main.backgroundIndex));
 	}
 	
 	private static void updateMinimap() {
