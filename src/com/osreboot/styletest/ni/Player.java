@@ -65,8 +65,8 @@ public class Player {
 
 	public static void update(float delta) {
 
-		float xIn = allowInput ? HvlInputSeriesAction.RIGHT.getCurrentOutput() - HvlInputSeriesAction.LEFT.getCurrentOutput() : 0;
-		float yIn = allowInput ? HvlInputSeriesAction.DOWN.getCurrentOutput() - HvlInputSeriesAction.UP.getCurrentOutput() : 0;
+		float xIn = allowInput ? HvlInputSeriesAction.HORIZONTAL.getCurrentOutput() : 0;
+		float yIn = allowInput ? HvlInputSeriesAction.VERTICAL.getCurrentOutput() : 0;
 		
 		rotVel += xIn * delta;
 		rotVel = Math.min(Math.max(rotVel, -maxVel), rotVel);
