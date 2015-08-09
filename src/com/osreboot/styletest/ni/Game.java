@@ -28,7 +28,7 @@ import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
 public class Game {
 	public static final int requiredLaps = 2;
 
-	public static final String level1 = "TestLevel.map";
+	public static final String level1 = "TestLevel.map", level2 = "SlowAsMudBitch.map";
 	public static ArrayList<String> levels = new ArrayList<>();
 
 	public static class Checkpoint {
@@ -68,6 +68,7 @@ public class Game {
 	public static void initialize() {
 		levels.clear();
 		levels.add(level1);
+		levels.add(level2);
 		updateLevel();
 	}
 
