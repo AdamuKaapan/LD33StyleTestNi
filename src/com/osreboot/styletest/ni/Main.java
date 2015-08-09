@@ -1,6 +1,9 @@
 package com.osreboot.styletest.ni;
 
+import org.newdawn.slick.openal.SoundStore;
+
 import com.osreboot.ridhvl.display.collection.HvlDisplayModeDefault;
+import com.osreboot.ridhvl.menu.HvlMenu;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Main extends HvlTemplateInteg2D {
@@ -33,10 +36,22 @@ public class Main extends HvlTemplateInteg2D {
 		Game.initialize();
 		
 		MenuManager.initialize();
+		
+		getSoundLoader().loadResource("Electric reign");
+		getSoundLoader().loadResource("Slide Velocity");
 	}
 
 	@Override
 	public void update(float delta){
+		SoundStore.get().poll(0);
+		if(HvlMenu.getCurrent() != MenuManager.game){
+			if(!getSound(1).isPlaying()) getSound(1).playAsSoundEffect(1, 1, false);
+			if(getSound(0).isPlaying()) getSound(0).stop();
+		}else{
+			if(!getSound(0).isPlaying()) getSound(0).playAsSoundEffect(1, 1, false);
+			if(getSound(1).isPlaying()) getSound(1).stop();
+		}
+		
 		MenuManager.update(delta);
 	}
 

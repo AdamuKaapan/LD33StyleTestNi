@@ -115,7 +115,14 @@ public class MenuManager {
 			}
 		}));
 		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlSpacer(0, 512 + 16));
-		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlTextButton.Builder().setText("play").setClickedCommand(new HvlButtonMenuLink(game)).build());
+		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlTextButton.Builder().setText("play").setClickedCommand(new OnClickedCommand(){
+			@Override
+			public void run(HvlButton arg0Arg){
+				Game.initialize();
+				HvlMenu.setCurrent(game);
+			}
+		}).build());
+		levels.add(new HvlTextButton.Builder().setText("back").setX(16).setY(16).setClickedCommand(new HvlButtonMenuLink(main)).build());
 		
 		HvlMenu.setCurrent(main);
 	}
