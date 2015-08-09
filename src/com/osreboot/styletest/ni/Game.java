@@ -9,13 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.newdawn.slick.Color;
-
 import com.osreboot.ridhvl.HvlCoord;
-import com.osreboot.ridhvl.HvlTextureUtil;
 import com.osreboot.ridhvl.painter.HvlCamera;
 import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
-import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 import com.osreboot.ridhvl.tile.HvlLayeredTileMap;
 import com.osreboot.ridhvl.tile.HvlTile;
