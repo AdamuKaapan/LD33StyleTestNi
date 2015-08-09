@@ -28,6 +28,7 @@ public class Player {
 	private static HvlCoord velocity;
 	
 	private static HvlAnimatedTextureUV drawing;
+	private static boolean allowInput = true;
 	
 	public static void reset() {
 		drawing = new HvlAnimatedTextureUV(HvlTemplateInteg2D.getTexture(Main.playerIndex), 32, 8, 0.1f);
@@ -59,12 +60,13 @@ public class Player {
 		y = startY * Game.map.getTileHeight() + (playerSize / 2);
 		velocity = new HvlCoord(0, 0);
 		theta = 90;
+		allowInput = true;
 	}
 
 	public static void update(float delta) {
 
-		float xIn = HvlInputSeriesAction.RIGHT.getCurrentOutput() - HvlInputSeriesAction.LEFT.getCurrentOutput();
-		float yIn = HvlInputSeriesAction.DOWN.getCurrentOutput() - HvlInputSeriesAction.UP.getCurrentOutput();
+		float xIn = allowInput ? HvlInputSeriesAction.RIGHT.getCurrentOutput() - HvlInputSeriesAction.LEFT.getCurrentOutput() : 0;
+		float yIn = allowInput ? HvlInputSeriesAction.DOWN.getCurrentOutput() - HvlInputSeriesAction.UP.getCurrentOutput() : 0;
 		
 		rotVel += xIn * delta;
 		rotVel = Math.min(Math.max(rotVel, -maxVel), rotVel);
@@ -183,5 +185,13 @@ public class Player {
 
 	public static void setY(float y) {
 		Player.y = y;
+	}
+
+	public static boolean isAllowInput() {
+		return allowInput;
+	}
+
+	public static void setAllowInput(boolean allowInputArg) {
+		allowInput = allowInputArg;
 	}
 }
