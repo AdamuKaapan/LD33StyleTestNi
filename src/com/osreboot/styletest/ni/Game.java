@@ -64,6 +64,7 @@ public class Game {
 	}
 
 	public static void initialize() {
+		levels.clear();
 		levels.add(level1);
 		updateLevel();
 	}
