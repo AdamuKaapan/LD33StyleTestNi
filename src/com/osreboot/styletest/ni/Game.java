@@ -14,12 +14,14 @@ import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlCoord;
 import com.osreboot.ridhvl.menu.HvlMenu;
-import com.osreboot.ridhvl.painter.HvlCamera;
-import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 import com.osreboot.ridhvl.tile.HvlLayeredTileMap;
 import com.osreboot.ridhvl.tile.HvlTile;
 import com.osreboot.ridhvl.tile.collection.HvlSimpleTile;
+//github.com/AdamuKaapan/LD33StyleTestNi.git
+import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
+import com.osreboot.ridhvl.painter.HvlCamera;
+import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
 
 public class Game {
 	
@@ -96,6 +98,8 @@ public class Game {
 					checkpoints.put(waypointIndex, new LinkedList<Game.Checkpoint>());
 				
 				checkpoints.get(waypointIndex).add(new Game.Checkpoint(x, y));
+				
+				Game.map.getLayer(2).setTile(x, y, null);
 			}
 		}
 		
@@ -136,6 +140,26 @@ public class Game {
 
 	public static void draw(float delta) {
 		map.draw(delta);
+		
+		List<Checkpoint> current = checkpoints.get(currentCheckpoint);
+		int nextC = currentCheckpoint + 1;
+		if (nextC >= checkpoints.size()) nextC = 0;
+		List<Checkpoint> next = checkpoints.get(nextC);
+		
+		for (Checkpoint c : current)
+		{
+			float x = c.x * map.getTileWidth();
+			float y = c.y * map.getTileHeight();
+			HvlPainter2D.hvlDrawQuad(x, y, map.getTileWidth(), map.getTileHeight(), 0, 0, 0.5f, 1, HvlTemplateInteg2D.getTexture(Main.waypointIndex));
+		}
+		
+		for (Checkpoint c : next)
+		{
+			float x = c.x * map.getTileWidth();
+			float y = c.y * map.getTileHeight();
+			HvlPainter2D.hvlDrawQuad(x, y, map.getTileWidth(), map.getTileHeight(), 0.5f, 0, 1, 1, HvlTemplateInteg2D.getTexture(Main.waypointIndex), new Color(1, 1, 1, 0.5f));
+		}
+		
 		Player.draw(delta);
 		
 		if(time < 0 || finished != 0){
