@@ -31,12 +31,12 @@ public class Game {
 				sb.append(current);
 				sb.append(System.lineSeparator());
 			}
-			Game.map = HvlLayeredTileMap.load(sb.toString(), HvlTemplateInteg2D.getTexture(Main.tilemapIndex), 0, 0, 128, 128);
+			Game.map = HvlLayeredTileMap.load(sb.toString(), HvlTemplateInteg2D.getTexture(Main.tilemapIndex), 0, 0, 64, 64);
 			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		reset();
 	}
 
@@ -46,7 +46,7 @@ public class Game {
 		HvlCamera.setAlignment(HvlCameraAlignment.CENTER);
 		HvlCamera.setPosition(Player.getX(), Player.getY());
 	}
-	
+
 	public static void draw(float delta) {
 		map.draw(delta);
 		HvlPainter2D.hvlDrawQuad(-32, -32, 64, 64, Color.magenta);
@@ -63,5 +63,20 @@ public class Game {
 
 	public static HvlLayeredTileMap getMap() {
 		return map;
+	}
+
+	public static boolean isTileInLocation(float x, float y, int... layers) {
+		int tileX = (int) (x / map.getTileWidth());
+		int tileY = (int) (y / map.getTileHeight());
+
+		for (int layer : layers) {
+			if (tileX < 0 || tileY < 0 || tileX >= map.getLayer(layer).getMapWidth() || tileY >= map.getLayer(layer).getMapHeight())
+				continue;
+
+			if (map.getLayer(layer).getTile(tileX, tileY) != null)
+				return true;
+		}
+
+		return false;
 	}
 }

@@ -25,6 +25,7 @@ public class Main extends HvlTemplateInteg2D {
 		getTextureLoader().loadResource("ButtonHover");
 		getTextureLoader().loadResource("ButtonPressed");
 		
+		Game.setCurrentLevel("TestLevel.map");
 		Game.initialize();
 		
 		MenuManager.initialize();

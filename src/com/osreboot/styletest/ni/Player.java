@@ -7,7 +7,7 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Player {
 
-	public static final float playerSize = 64f;
+	public static final float playerSize = 48f;
 	public static final float accel = 256f;
 	public static final float motionDecay = -0.5f, stationaryDecay = -1f;
 	public static final float rotDecay = -2f;
@@ -24,8 +24,8 @@ public class Player {
 	private static HvlCoord velocity;
 	
 	public static void reset() {
-		x = 0;
-		y = 0;
+		x = 5 * Game.map.getTileWidth() + (playerSize / 2);
+		y = 6 * Game.map.getTileHeight() + (playerSize / 2);
 		velocity = new HvlCoord(0, 0);
 		theta = 90;
 	}
@@ -40,16 +40,73 @@ public class Player {
 		rotVel *= Math.pow(Math.E, delta * rotDecay);
 		theta += Math.min(maxRot, Math.max(-maxRot, rotVel * velocity.length())) * delta;
 		
-		HvlCoord motion = new HvlCoord((float)Math.cos(Math.toRadians(theta + 90)) * yIn, (float)Math.sin(Math.toRadians(theta + 90)) * yIn);
-		motion.normalize();
+		HvlCoord input = new HvlCoord((float)Math.cos(Math.toRadians(theta + 90)) * yIn, (float)Math.sin(Math.toRadians(theta + 90)) * yIn);
+		input.normalize();
 		
-		motion.mult(accel);
-		motion.mult(delta);
+		input.mult(accel);
+		input.mult(delta);
 	
-		motion.x = Float.isNaN(motion.x) ? 0 : motion.x;
-		motion.y = Float.isNaN(motion.y) ? 0 : motion.y;
+		input.x = Float.isNaN(input.x) ? 0 : input.x;
+		input.y = Float.isNaN(input.y) ? 0 : input.y;
+				
+		float bounce = 0.15f;
 		
-		velocity.add(motion);
+		velocity.add(input);
+		
+		float adjX = x + (velocity.x * delta), adjY = y + (velocity.y * delta);
+		float wallGrind = -3f;
+		
+		if (Game.isTileInLocation(adjX, adjY + (playerSize / 2), 1))
+		{
+			velocity.y *= -bounce;
+			velocity.x *= Math.pow(Math.E, wallGrind * delta);
+		}
+		if (Game.isTileInLocation(adjX, adjY - (playerSize / 2), 1))
+		{
+			velocity.y *= -bounce;
+			velocity.x *= Math.pow(Math.E, wallGrind * delta);
+		}
+		if (Game.isTileInLocation(adjX + (playerSize / 2), adjY, 1))
+		{
+			velocity.x *= -bounce;
+			velocity.y *= Math.pow(Math.E, wallGrind * delta);
+		}
+		if (Game.isTileInLocation(adjX - (playerSize / 2), adjY, 1))
+		{
+			velocity.x *= -bounce;
+			velocity.y *= Math.pow(Math.E, wallGrind * delta);
+		}
+		
+		float root2 = (float) Math.sqrt(2) * 0.5f;
+		
+		if (Game.isTileInLocation(adjX + (playerSize * 0.5f * root2), adjY + (playerSize * 0.5f * root2), 1))
+		{
+			velocity.x *= -bounce * root2;
+			velocity.y *= -bounce * root2;
+			velocity.x *= Math.pow(Math.E, wallGrind * delta);
+			velocity.y *= Math.pow(Math.E, -0.2f * delta);
+		}
+		if (Game.isTileInLocation(adjX + (playerSize * 0.5f * root2), adjY - (playerSize * 0.5f * root2), 1))
+		{
+			velocity.x *= -bounce * root2;
+			velocity.y *= -bounce * root2;
+			velocity.x *= Math.pow(Math.E, wallGrind * delta);
+			velocity.y *= Math.pow(Math.E, -0.2f * delta);
+		}
+		if (Game.isTileInLocation(adjX - (playerSize * 0.5f * root2), adjY + (playerSize * 0.5f * root2), 1))
+		{
+			velocity.x *= -bounce * root2;
+			velocity.y *= -bounce * root2;
+			velocity.x *= Math.pow(Math.E, wallGrind * delta);
+			velocity.y *= Math.pow(Math.E, -0.2f * delta);
+		}
+		if (Game.isTileInLocation(adjX - (playerSize * 0.5f * root2), adjY - (playerSize * 0.5f * root2), 1))
+		{
+			velocity.x *= -bounce * root2;
+			velocity.y *= -bounce * root2;
+			velocity.x *= Math.pow(Math.E, wallGrind * delta);
+			velocity.y *= Math.pow(Math.E, -0.2f * delta);
+		}
 
 		velocity.x = Float.isNaN(velocity.x) ? 0 : velocity.x;
 		velocity.y = Float.isNaN(velocity.y) ? 0 : velocity.y;
