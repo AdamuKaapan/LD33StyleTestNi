@@ -123,7 +123,6 @@ public class Game {
 
 	public static void draw(float delta) {
 		map.draw(delta);
-		HvlPainter2D.hvlDrawQuad(-32, -32, 64, 64, 0, 0, 1, 1, HvlTextureUtil.getColoredRect(64, 64, Color.white));
 		Player.draw(delta);
 	}
 
