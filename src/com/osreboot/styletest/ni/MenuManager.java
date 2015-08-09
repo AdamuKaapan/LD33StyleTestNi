@@ -91,7 +91,9 @@ public class MenuManager {
 		levels.add(new HvlDrawableComponent(512, 512, new HvlComponentDrawable(){
 			@Override
 			public void draw(float x, float y, float w, float h, float delta){
-				hvlDrawQuad((Display.getWidth()/2) - 256, (Display.getHeight()/2) - 256, 512, 512, Color.white);
+				Game.map.setTileWidth(512f/Game.map.getLayer(0).getMapWidth());
+				Game.map.setTileHeight(512f/Game.map.getLayer(0).getMapHeight());
+				//hvlDrawQuad((Display.getWidth()/2) - 256, (Display.getHeight()/2) - 256, 512, 512, Color.white);
 			}
 		}));
 		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlSpacer(0, 512 + 16));
