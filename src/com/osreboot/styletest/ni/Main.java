@@ -21,7 +21,7 @@ public class Main extends HvlTemplateInteg2D {
 		getTextureLoader().loadResource("Player");
 		getTextureLoader().loadResource("Tilesheet");
 		getTextureLoader().loadResource("FontSmall");
-		getTextureLoader().loadResource("Button");
+		getTextureLoader().loadResource("ButtonIdle");
 		getTextureLoader().loadResource("ButtonHover");
 		getTextureLoader().loadResource("ButtonPressed");
 		getTextureLoader().loadResource("MenuBackground");
