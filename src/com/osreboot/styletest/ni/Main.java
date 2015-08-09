@@ -5,7 +5,7 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Main extends HvlTemplateInteg2D {
 
-	public static final int fontIndex = 0, playerIndex = 0, tilemapIndex = 1;
+	public static final int fontIndex = 0, playerIndex = 1, tilemapIndex = 2, fontSmallIndex = 3, buttonIndex = 4, buttonHoverIndex = 5, buttonPressedIndex = 6;
 	
 	public static void main(String[] args) {
 		new Main();
@@ -17,9 +17,13 @@ public class Main extends HvlTemplateInteg2D {
 
 	@Override
 	public void initialize(){
-//		getTextureLoader().loadResource("Font");
+		getTextureLoader().loadResource("Font");
 		getTextureLoader().loadResource("Player");
 		getTextureLoader().loadResource("Tilesheet");
+		getTextureLoader().loadResource("FontSmall");
+		getTextureLoader().loadResource("Button");
+		getTextureLoader().loadResource("ButtonHover");
+		getTextureLoader().loadResource("ButtonPressed");
 		
 		Game.setCurrentLevel("TestLevel.map");
 		Game.initialize();
@@ -29,8 +33,6 @@ public class Main extends HvlTemplateInteg2D {
 
 	@Override
 	public void update(float delta){
-		Game.update(delta);
-		Game.draw(delta);
 		MenuManager.update(delta);
 	}
 
