@@ -5,6 +5,8 @@ import com.osreboot.ridhvl.input.HvlInputSeriesAction;
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
 import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
+import com.osreboot.ridhvl.tile.HvlTile;
+import com.osreboot.ridhvl.tile.collection.HvlSimpleTile;
 
 public class Player {
 
@@ -29,8 +31,31 @@ public class Player {
 	public static void reset() {
 		drawing = new HvlAnimatedTextureUV(HvlTemplateInteg2D.getTexture(Main.playerIndex), 32, 8, 0.1f);
 		drawing.setRunning(false);
-		x = 5 * Game.map.getTileWidth() + (playerSize / 2);
-		y = 6 * Game.map.getTileHeight() + (playerSize / 2);
+		
+		int startX = -1;
+		int startY = -1;
+		for (int x = 0; x < Game.map.getLayer(2).getMapWidth(); x++)
+		{
+			for (int y = 0; y < Game.map.getLayer(2).getMapHeight(); y++)
+			{
+				HvlTile t = Game.map.getLayer(2).getTile(x, y);
+				if (t == null) continue;
+				
+				if (!(t instanceof HvlSimpleTile)) continue;
+				
+				HvlSimpleTile tile = (HvlSimpleTile) t;
+				
+				if (tile.getTile() == 239)
+				{
+					startX = x;
+					startY = y;
+					break;
+				}
+			}
+		}
+		
+		x = startX * Game.map.getTileWidth() + (playerSize / 2);
+		y = startX * Game.map.getTileHeight() + (playerSize / 2);
 		velocity = new HvlCoord(0, 0);
 		theta = 90;
 	}

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.newdawn.slick.Color;
 
+import com.osreboot.ridhvl.HvlCoord;
 import com.osreboot.ridhvl.HvlTextureUtil;
 import com.osreboot.ridhvl.painter.HvlCamera;
 import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
@@ -22,6 +23,8 @@ import com.osreboot.ridhvl.tile.collection.HvlSimpleTile;
 public class Game {
 
 	public static class Checkpoint {
+		public static float distance = 128f;
+		
 		public int x, y;
 		
 		public Checkpoint(int x, int y)
@@ -38,6 +41,7 @@ public class Game {
 	private static Map<Integer, List<Checkpoint>> checkpoints;
 	
 	private static int currentCheckpoint;
+	private static int currentLap;
 	
 	public static void reset() {
 		Player.reset();
@@ -74,7 +78,7 @@ public class Game {
 				if (!checkpoints.containsKey(waypointIndex))
 					checkpoints.put(waypointIndex, new LinkedList<Game.Checkpoint>());
 				
-				checkpoints.get(waypointIndex).add(new Game.Checkpoint(x, waypointIndex));
+				checkpoints.get(waypointIndex).add(new Game.Checkpoint(x, y));
 			}
 		}
 		
@@ -83,6 +87,26 @@ public class Game {
 
 	public static void update(float delta) {
 		Player.update(delta);
+		
+		List<Checkpoint> currentChecks = checkpoints.get(currentCheckpoint);
+		
+		for (Checkpoint c : currentChecks)
+		{
+			float worldX = c.x * map.getTileWidth(), worldY = c.y * map.getTileHeight();
+			
+			HvlCoord dist = new HvlCoord(Player.getX() - worldX, Player.getY() - worldY);
+			
+			if (dist.length() < Checkpoint.distance)
+			{
+				System.out.println("Checkpoint!");
+				currentCheckpoint++;
+				if (currentCheckpoint >= checkpoints.size())
+				{
+					currentCheckpoint = 0;
+					currentLap++;
+				}
+			}
+		}
 
 		HvlCamera.setAlignment(HvlCameraAlignment.CENTER);
 		HvlCamera.setPosition(Player.getX(), Player.getY());
