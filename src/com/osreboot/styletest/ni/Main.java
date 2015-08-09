@@ -39,6 +39,7 @@ public class Main extends HvlTemplateInteg2D {
 		
 		getSoundLoader().loadResource("Electric reign");
 		getSoundLoader().loadResource("Slide Velocity");
+		getSoundLoader().loadResource("Intro to electric regin");
 	}
 
 	@Override

@@ -27,7 +27,8 @@ import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
 
 public class Game {
 	public static final int requiredLaps = 2;
-
+	public static final float preTime = -5.35f;
+	
 	public static final String level1 = "TestLevel.map", level2 = "SlowAsMudBitch.map";
 	public static ArrayList<String> levels = new ArrayList<>();
 
@@ -61,7 +62,7 @@ public class Game {
 		currentLap = 0;
 		time = 0.0f;
 		circleAngle = 0.0f;
-		time = -5f;
+		time = preTime;
 		finished = 0;
 	}
 
@@ -118,7 +119,7 @@ public class Game {
 		{
 			if (!HvlTemplateInteg2D.getSound(0).isPlaying())
 				HvlTemplateInteg2D.getSound(0).playAsSoundEffect(1, 1, false);
-		}
+		}else if(time > preTime) if (!HvlTemplateInteg2D.getSound(2).isPlaying()) HvlTemplateInteg2D.getSound(2).playAsSoundEffect(1, 1, false);
 		
 		circleAngle += 90.0f * delta;
 
