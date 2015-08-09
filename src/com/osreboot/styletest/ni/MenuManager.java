@@ -88,7 +88,7 @@ public class MenuManager {
 		levels.add(new HvlTextButton.Builder().setText("previous").setClickedCommand(new OnClickedCommand(){
 			@Override
 			public void run(HvlButton arg0Arg) {
-				if(Game.levels.indexOf(Game.getCurrentLevel()) - 1 <= 0) Game.setCurrentLevel(Game.levels.get(Game.levels.size() - 1));
+				if(Game.levels.indexOf(Game.getCurrentLevel()) <= 0) Game.setCurrentLevel(Game.levels.get(Game.levels.size() - 1));
 				else Game.setCurrentLevel(Game.levels.get(Game.levels.indexOf(Game.getCurrentLevel()) - 1));
 				updateMinimap();
 			}
