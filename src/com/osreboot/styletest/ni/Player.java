@@ -1,5 +1,7 @@
 package com.osreboot.styletest.ni;
 
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.*;
+
 import com.osreboot.ridhvl.HvlCoord;
 import com.osreboot.ridhvl.input.HvlInputSeriesAction;
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
@@ -8,12 +10,11 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Player {
 
-	public static final float playerSize = 48f;
-	public static final float accel = 256f;
+	public static final float playerSize = 64f;
+	public static final float accel = 512;
 	public static final float motionDecay = -0.5f, stationaryDecay = -1f;
-	public static final float rotDecay = -2f;
 	
-	public static final float maxRot = 135f;
+	public static final float maxRot = 5000f;
 	
 	public static final float maxVel = 2048f;
 	
@@ -42,8 +43,8 @@ public class Player {
 		
 		rotVel += xIn * delta;
 		rotVel = Math.min(Math.max(rotVel, -maxVel), rotVel);
-		rotVel *= Math.pow(Math.E, delta * rotDecay);
-		theta += Math.min(maxRot, Math.max(-maxRot, rotVel * velocity.length())) * delta;
+		rotVel *= Math.pow(Math.E, delta * -2);
+		theta += Math.min(maxRot, Math.max(-maxRot, rotVel * (velocity.length() < 16 ? 0 : (velocity.length() < 32 ? 128 : (velocity.length() < 64 ? 256 : 512))))) * delta;
 		
 		HvlCoord input = new HvlCoord((float)Math.cos(Math.toRadians(theta + 90)) * yIn, (float)Math.sin(Math.toRadians(theta + 90)) * yIn);
 		input.normalize();
@@ -59,7 +60,7 @@ public class Player {
 		velocity.add(input);
 		
 		float adjX = x + (velocity.x * delta), adjY = y + (velocity.y * delta);
-		float wallGrind = -3f;
+		float wallGrind = -1f;
 		
 		if (Game.isTileInLocation(adjX, adjY + (playerSize / 2), 1))
 		{
@@ -132,13 +133,15 @@ public class Player {
 	}
 
 	public static void draw(float delta) {
-		float adj = theta - 22.5f;
+		float adj = theta;
 		
-		int frame = (int) (adj / 45.0f) + 1;
+		int frame = (int) (adj / 90f) * 2;
 		
 		drawing.setCurrentFrame(frame);
 		
+		hvlRotate(x, y, (adj%90));
 		HvlPainter2D.hvlDrawQuad(x - (playerSize / 2), y - (playerSize / 2), playerSize, playerSize, drawing);
+		hvlResetRotation();
 	}
 	
 	public static float getX() {

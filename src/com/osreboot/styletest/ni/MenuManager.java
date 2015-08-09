@@ -10,11 +10,13 @@ import com.osreboot.ridhvl.menu.HvlButtonMenuLink;
 import com.osreboot.ridhvl.menu.HvlComponentDefault;
 import com.osreboot.ridhvl.menu.HvlMenu;
 import com.osreboot.ridhvl.menu.component.HvlArrangerBox;
-import com.osreboot.ridhvl.menu.component.HvlComponentDrawable;
-import com.osreboot.ridhvl.menu.component.HvlSpacer;
 import com.osreboot.ridhvl.menu.component.HvlArrangerBox.ArrangementStyle;
+import com.osreboot.ridhvl.menu.component.HvlButton;
+import com.osreboot.ridhvl.menu.component.HvlButton.OnClickedCommand;
+import com.osreboot.ridhvl.menu.component.HvlComponentDrawable;
 import com.osreboot.ridhvl.menu.component.HvlDrawableComponent;
 import com.osreboot.ridhvl.menu.component.HvlLabel;
+import com.osreboot.ridhvl.menu.component.HvlSpacer;
 import com.osreboot.ridhvl.menu.component.collection.HvlTextButton;
 import com.osreboot.ridhvl.menu.component.collection.HvlTextureDrawable;
 import com.osreboot.ridhvl.painter.painter2d.HvlFontPainter2D;
@@ -43,8 +45,20 @@ public class MenuManager {
 		defaultButton.setyAlign(0.5f);
 		HvlComponentDefault.setDefault(defaultButton);
 		
-		main = new HvlMenu();
-		levels = new HvlMenu();
+		main = new HvlMenu(){
+			@Override
+			public void draw(float delta){
+				hvlDrawQuad((Display.getWidth()/2) - 640, (Display.getHeight()/2) - 360, 2048, 2048, HvlTemplateInteg2D.getTexture(Main.backgroundIndex));
+				super.draw(delta);
+			}
+		};
+		levels = new HvlMenu(){
+			@Override
+			public void draw(float delta){
+				hvlDrawQuad((Display.getWidth()/2) - 640, (Display.getHeight()/2) - 360, 2048, 2048, HvlTemplateInteg2D.getTexture(Main.backgroundIndex));
+				super.draw(delta);
+			}
+		};
 		game = new HvlMenu(){
 			@Override
 			public void update(float delta){
@@ -62,8 +76,18 @@ public class MenuManager {
 		
 		levels.add(new HvlArrangerBox.Builder().build());
 		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabel.Builder().setText("levels").build());
-		levels.add(new HvlTextButton.Builder().setText("previous").setClickedCommand(new HvlButtonMenuLink(levels)).setX((Display.getWidth()/2) - 256 - 256 - 32).setY((Display.getHeight()/2) - 32).build());
-		levels.add(new HvlTextButton.Builder().setText("next").setClickedCommand(new HvlButtonMenuLink(levels)).setX((Display.getWidth()/2) + 256 + 32).setY((Display.getHeight()/2) - 32).build());
+		levels.add(new HvlTextButton.Builder().setText("previous").setClickedCommand(new OnClickedCommand(){
+			@Override
+			public void run(HvlButton arg0Arg) {
+				if(Game.levels.indexOf(Game.getCurrentLevel()) - 1 <= 0) Game.setCurrentLevel(Game.levels.get(Game.levels.size() - 1));
+			}
+		}).setX((Display.getWidth()/2) - 256 - 256 - 32).setY((Display.getHeight()/2) - 32).build());
+		levels.add(new HvlTextButton.Builder().setText("next").setClickedCommand(new OnClickedCommand(){
+			@Override
+			public void run(HvlButton arg0Arg) {
+				if(Game.levels.indexOf(Game.getCurrentLevel()) + 1 >= Game.levels.size()) Game.setCurrentLevel(Game.levels.get(0));
+			}
+		}).setX((Display.getWidth()/2) + 256 + 32).setY((Display.getHeight()/2) - 32).build());
 		levels.add(new HvlDrawableComponent(512, 512, new HvlComponentDrawable(){
 			@Override
 			public void draw(float x, float y, float w, float h, float delta){

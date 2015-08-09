@@ -3,6 +3,7 @@ package com.osreboot.styletest.ni;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 
@@ -14,6 +15,9 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 import com.osreboot.ridhvl.tile.HvlLayeredTileMap;
 
 public class Game {
+	
+	public static final String level1 = "TestLevel.map";
+	public static ArrayList<String> levels = new ArrayList<>();
 
 	public static HvlLayeredTileMap map;
 
@@ -24,6 +28,11 @@ public class Game {
 	}
 
 	public static void initialize() {
+		levels.add(level1);
+		updateLevel();
+	}
+
+	public static void updateLevel(){
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("res/" + currentLevel));
 			StringBuilder sb = new StringBuilder();
@@ -40,7 +49,7 @@ public class Game {
 
 		reset();
 	}
-
+	
 	public static void update(float delta) {
 		Player.update(delta);
 
@@ -60,6 +69,7 @@ public class Game {
 
 	public static void setCurrentLevel(String currentLevel) {
 		Game.currentLevel = currentLevel;
+		updateLevel();
 	}
 
 	public static HvlLayeredTileMap getMap() {
