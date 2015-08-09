@@ -47,9 +47,6 @@ public class Main extends HvlTemplateInteg2D {
 		if(HvlMenu.getCurrent() != MenuManager.game){
 			if(!getSound(1).isPlaying()) getSound(1).playAsSoundEffect(1, 1, false);
 			if(getSound(0).isPlaying()) getSound(0).stop();
-		}else{
-			if(!getSound(0).isPlaying()) getSound(0).playAsSoundEffect(1, 1, false);
-			if(getSound(1).isPlaying()) getSound(1).stop();
 		}
 		
 		MenuManager.update(delta);

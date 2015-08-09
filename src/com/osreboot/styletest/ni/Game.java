@@ -112,6 +112,13 @@ public class Game {
 	}
 
 	public static void update(float delta) {
+		if (HvlTemplateInteg2D.getSound(1).isPlaying()) HvlTemplateInteg2D.getSound(1).stop();
+		if (time >= 0)
+		{
+			if (!HvlTemplateInteg2D.getSound(0).isPlaying())
+				HvlTemplateInteg2D.getSound(0).playAsSoundEffect(1, 1, false);
+		}
+		
 		circleAngle += 90.0f * delta;
 
 		if (currentLap > requiredLaps)
@@ -134,12 +141,10 @@ public class Game {
 			HvlCoord dist = new HvlCoord(Player.getX() - worldX, Player.getY() - worldY);
 
 			if (dist.length() < Checkpoint.distance) {
-				System.out.println("Checkpoint!");
 				currentCheckpoint++;
 				if (currentCheckpoint >= checkpoints.size()) {
 					currentCheckpoint = 0;
 					currentLap++;
-					System.out.println("LAP " + currentLap + "!");
 				}
 			}
 		}
