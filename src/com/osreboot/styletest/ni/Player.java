@@ -56,7 +56,7 @@ public class Player {
 		}
 		
 		x = startX * Game.map.getTileWidth() + (playerSize / 2);
-		y = startX * Game.map.getTileHeight() + (playerSize / 2);
+		y = startY * Game.map.getTileHeight() + (playerSize / 2);
 		velocity = new HvlCoord(0, 0);
 		theta = 90;
 	}

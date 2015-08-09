@@ -47,8 +47,13 @@ public class Game {
 	private static int currentCheckpoint;
 	private static int currentLap;
 	
+	private static float time;
+	
 	public static void reset() {
 		Player.reset();
+		currentCheckpoint = 0;
+		currentLap = 0;
+		time = 0.0f;
 	}
 
 	public static void initialize() {
@@ -113,6 +118,7 @@ public class Game {
 				{
 					currentCheckpoint = 0;
 					currentLap++;
+					System.out.println("LAP " + currentLap + "!");
 				}
 			}
 		}
