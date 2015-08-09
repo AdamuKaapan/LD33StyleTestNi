@@ -29,7 +29,7 @@ public class Game {
 	public static final int requiredLaps = 2;
 	public static final float preTime = -5.35f;
 	
-	public static final String level1 = "TestLevel.map", level2 = "SlowAsMudBitch.map";
+	public static final String level1 = "TestLevel.map", level2 = "SlowAsMudBitch.map", level3 = "Figure6.map";
 	public static ArrayList<String> levels = new ArrayList<>();
 
 	public static class Checkpoint {
@@ -70,6 +70,7 @@ public class Game {
 		levels.clear();
 		levels.add(level1);
 		levels.add(level2);
+		levels.add(level3);
 		updateLevel();
 	}
 
