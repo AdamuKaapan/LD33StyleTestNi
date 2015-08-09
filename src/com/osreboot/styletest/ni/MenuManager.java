@@ -82,13 +82,20 @@ public class MenuManager {
 		main.add(new HvlArrangerBox.Builder().build());
 		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabel.Builder().setText("lost in chrome").build());
 		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlTextButton.Builder().setText("play").setClickedCommand(new HvlButtonMenuLink(levels)).build());
+		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlTextButton.Builder().setText("quit").setClickedCommand(new OnClickedCommand(){
+			@Override
+			public void run(HvlButton arg0Arg){
+				System.exit(0);
+			}
+		}).build());
+		
 		
 		levels.add(new HvlArrangerBox.Builder().build());
 		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabel.Builder().setText("levels").build());
 		levels.add(new HvlTextButton.Builder().setText("previous").setClickedCommand(new OnClickedCommand(){
 			@Override
 			public void run(HvlButton arg0Arg) {
-				if(Game.levels.indexOf(Game.getCurrentLevel()) - 1 <= 0) Game.setCurrentLevel(Game.levels.get(Game.levels.size() - 1));
+				if(Game.levels.indexOf(Game.getCurrentLevel()) <= 0) Game.setCurrentLevel(Game.levels.get(Game.levels.size() - 1));
 				else Game.setCurrentLevel(Game.levels.get(Game.levels.indexOf(Game.getCurrentLevel()) - 1));
 				updateMinimap();
 			}
