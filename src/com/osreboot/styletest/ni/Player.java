@@ -2,6 +2,7 @@ package com.osreboot.styletest.ni;
 
 import com.osreboot.ridhvl.HvlCoord;
 import com.osreboot.ridhvl.input.HvlInputSeriesAction;
+import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
 import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
@@ -23,7 +24,11 @@ public class Player {
 	
 	private static HvlCoord velocity;
 	
+	private static HvlAnimatedTextureUV drawing;
+	
 	public static void reset() {
+		drawing = new HvlAnimatedTextureUV(HvlTemplateInteg2D.getTexture(Main.playerIndex), 32, 8, 0.1f);
+		drawing.setRunning(false);
 		x = 5 * Game.map.getTileWidth() + (playerSize / 2);
 		y = 6 * Game.map.getTileHeight() + (playerSize / 2);
 		velocity = new HvlCoord(0, 0);
@@ -127,9 +132,13 @@ public class Player {
 	}
 
 	public static void draw(float delta) {
-		HvlPainter2D.hvlRotate(x, y, theta);
-		HvlPainter2D.hvlDrawQuad(x - (playerSize / 2), y - (playerSize / 2), playerSize, playerSize, HvlTemplateInteg2D.getTexture(Main.playerIndex));
-		HvlPainter2D.hvlResetRotation();
+		float adj = theta - 22.5f;
+		
+		int frame = (int) (adj / 45.0f) + 1;
+		
+		drawing.setCurrentFrame(frame);
+		
+		HvlPainter2D.hvlDrawQuad(x - (playerSize / 2), y - (playerSize / 2), playerSize, playerSize, drawing);
 	}
 	
 	public static float getX() {

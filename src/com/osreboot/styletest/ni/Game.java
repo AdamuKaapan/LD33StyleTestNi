@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import org.newdawn.slick.Color;
 
+import com.osreboot.ridhvl.HvlTextureUtil;
 import com.osreboot.ridhvl.painter.HvlCamera;
 import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
 import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
@@ -49,7 +50,7 @@ public class Game {
 
 	public static void draw(float delta) {
 		map.draw(delta);
-		HvlPainter2D.hvlDrawQuad(-32, -32, 64, 64, Color.magenta);
+		HvlPainter2D.hvlDrawQuad(-32, -32, 64, 64, 0, 0, 1, 1, HvlTextureUtil.getColoredRect(64, 64, Color.white));
 		Player.draw(delta);
 	}
 
