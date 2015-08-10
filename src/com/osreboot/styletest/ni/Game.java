@@ -61,7 +61,7 @@ public class Game {
 		currentLap = 0;
 		time = 0.0f;
 		circleAngle = 0.0f;
-		time = -5f;
+		time = -Main.introLength;
 		finished = 0;
 	}
 
@@ -118,6 +118,11 @@ public class Game {
 		{
 			if (!HvlTemplateInteg2D.getSound(0).isPlaying())
 				HvlTemplateInteg2D.getSound(0).playAsSoundEffect(1, 1, false);
+		}
+		else if (time >= -Main.introLength)
+		{
+			if (!HvlTemplateInteg2D.getSound(2).isPlaying())
+				HvlTemplateInteg2D.getSound(2).playAsSoundEffect(1, 1, false);
 		}
 		
 		circleAngle += 90.0f * delta;
