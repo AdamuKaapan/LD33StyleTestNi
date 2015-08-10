@@ -82,6 +82,12 @@ public class MenuManager {
 		main.add(new HvlArrangerBox.Builder().build());
 		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabel.Builder().setText("lost in chrome").build());
 		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabeledButton.Builder().setText("play").setClickedCommand(new HvlButtonMenuLink(levels)).build());
+		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabeledButton.Builder().setText("quit").setClickedCommand(new OnClickedCommand(){
+			@Override
+			public void run(HvlButton arg0Arg){
+				System.exit(0);
+			}
+		}).build());
 		
 		levels.add(new HvlArrangerBox.Builder().build());
 		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabel.Builder().setText("levels").build());

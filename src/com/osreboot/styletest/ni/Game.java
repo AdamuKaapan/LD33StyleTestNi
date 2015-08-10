@@ -27,8 +27,9 @@ import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
 
 public class Game {
 	public static final int requiredLaps = 2;
+	public static final float preTime = -5.366310f;
 
-	public static final String level1 = "TestLevel.map", level2 = "SlowAsMudBitch.map";
+	public static final String level1 = "TestLevel.map", level2 = "SlowAsMudBitch.map", level3 = "Figure6.map";
 	public static ArrayList<String> levels = new ArrayList<>();
 
 	public static class Checkpoint {
@@ -61,7 +62,7 @@ public class Game {
 		currentLap = 0;
 		time = 0.0f;
 		circleAngle = 0.0f;
-		time = -Main.introLength;
+		time = preTime;
 		finished = 0;
 	}
 
@@ -69,6 +70,7 @@ public class Game {
 		levels.clear();
 		levels.add(level1);
 		levels.add(level2);
+		levels.add(level3);
 		updateLevel();
 	}
 
@@ -113,18 +115,15 @@ public class Game {
 	}
 
 	public static void update(float delta) {
-		if (HvlTemplateInteg2D.getSound(1).isPlaying()) HvlTemplateInteg2D.getSound(1).stop();
-		if (time >= 0)
-		{
+		if (HvlTemplateInteg2D.getSound(1).isPlaying())
+			HvlTemplateInteg2D.getSound(1).stop();
+		if (time >= 0) {
 			if (!HvlTemplateInteg2D.getSound(0).isPlaying())
 				HvlTemplateInteg2D.getSound(0).playAsSoundEffect(1, 1, false);
-		}
-		else if (time >= -Main.introLength)
-		{
+		} else if (time > preTime)
 			if (!HvlTemplateInteg2D.getSound(2).isPlaying())
 				HvlTemplateInteg2D.getSound(2).playAsSoundEffect(1, 1, false);
-		}
-		
+
 		circleAngle += 90.0f * delta;
 
 		if (currentLap > requiredLaps)

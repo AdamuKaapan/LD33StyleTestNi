@@ -11,8 +11,6 @@ public class Main extends HvlTemplateInteg2D {
 	public static final int fontIndex = 0, playerIndex = 1, tilemapIndex = 2, fontSmallIndex = 3, buttonIndex = 4, buttonHoverIndex = 5, buttonPressedIndex = 6, backgroundIndex = 7, waypointIndex = 8,
 			pointerIndex = 9;
 	
-	public static final float introLength = 5.266310f;
-	
 	public static void main(String[] args) {
 		new Main();
 	}
