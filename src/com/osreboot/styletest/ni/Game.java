@@ -147,6 +147,7 @@ public class Game {
 
 			if (dist.length() < Checkpoint.distance) {
 				currentCheckpoint++;
+				HvlTemplateInteg2D.getSound(3).playAsSoundEffect(1, 2, false);
 				if (currentCheckpoint >= checkpoints.size()) {
 					currentCheckpoint = 0;
 					currentLap++;
