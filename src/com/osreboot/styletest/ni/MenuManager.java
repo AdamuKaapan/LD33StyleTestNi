@@ -140,7 +140,7 @@ public class MenuManager {
 	private static void doDefaultMenuUpdate(float delta){
 		HvlCamera.setAlignment(HvlCameraAlignment.TOPLEFT);
 		HvlCamera.setPosition(0, 0);
-		hvlDrawQuad((Display.getWidth()/2) - 640, (Display.getHeight()/2) - 360, 2048, 2048, HvlTemplateInteg2D.getTexture(Main.backgroundIndex));
+		hvlDrawQuad((Display.getWidth()/2) - 640, (Display.getHeight()/2) - 360, 1280, 720, HvlTemplateInteg2D.getTexture(Main.backgroundIndex));
 	}
 	
 	private static void updateMinimap() {
