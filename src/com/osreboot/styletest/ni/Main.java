@@ -32,7 +32,7 @@ public class Main extends HvlTemplateInteg2D {
 		getTextureLoader().loadResource("Checkpoint");
 		getTextureLoader().loadResource("Pointer");
 		
-		Game.setCurrentLevel("TestLevel.map");
+		Game.setCurrentLevel("TestLevel");
 		Game.initialize();
 		
 		MenuManager.initialize();

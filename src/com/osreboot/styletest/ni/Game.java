@@ -2,9 +2,6 @@ package com.osreboot.styletest.ni;
 
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,20 +13,20 @@ import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlCoord;
 import com.osreboot.ridhvl.menu.HvlMenu;
+import com.osreboot.ridhvl.painter.HvlCamera;
+import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
+//github.com/AdamuKaapan/LD33StyleTestNi.git
+import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 import com.osreboot.ridhvl.tile.HvlLayeredTileMap;
 import com.osreboot.ridhvl.tile.HvlTile;
 import com.osreboot.ridhvl.tile.collection.HvlSimpleTile;
-//github.com/AdamuKaapan/LD33StyleTestNi.git
-import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
-import com.osreboot.ridhvl.painter.HvlCamera;
-import com.osreboot.ridhvl.painter.HvlCamera.HvlCameraAlignment;
 
 public class Game {
 	public static final int requiredLaps = 2;
 	public static final float preTime = -5.366310f;
 
-	public static final String level1 = "TestLevel.map", level2 = "SlowAsMudBitch.map", level3 = "Figure6.map";
+	public static final String level1 = "TestLevel", level2 = "SlowAsMudBitch", level3 = "Figure6";
 	public static ArrayList<String> levels = new ArrayList<>();
 
 	public static class Checkpoint {
@@ -75,19 +72,8 @@ public class Game {
 	}
 
 	public static void updateLevel() {
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader("res/" + currentLevel));
-			StringBuilder sb = new StringBuilder();
-			String current;
-			while ((current = reader.readLine()) != null) {
-				sb.append(current);
-				sb.append(System.lineSeparator());
-			}
-			Game.map = HvlLayeredTileMap.load(sb.toString(), HvlTemplateInteg2D.getTexture(Main.tilemapIndex), 0, 0, 64, 64);
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		Game.map = HvlLayeredTileMap.load(currentLevel, true, HvlTemplateInteg2D.getTexture(Main.tilemapIndex), 0, 0, 64, 64);
+
 		checkpoints = new HashMap<>();
 		for (int x = 0; x < map.getLayer(2).getMapWidth(); x++) {
 			for (int y = 0; y < map.getLayer(2).getMapHeight(); y++) {
