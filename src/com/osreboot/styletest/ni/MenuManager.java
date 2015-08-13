@@ -10,13 +10,13 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlFontUtil;
+import com.osreboot.ridhvl.action.HvlAction1;
 import com.osreboot.ridhvl.menu.HvlButtonMenuLink;
 import com.osreboot.ridhvl.menu.HvlComponentDefault;
 import com.osreboot.ridhvl.menu.HvlMenu;
 import com.osreboot.ridhvl.menu.component.HvlArrangerBox;
 import com.osreboot.ridhvl.menu.component.HvlArrangerBox.ArrangementStyle;
 import com.osreboot.ridhvl.menu.component.HvlButton;
-import com.osreboot.ridhvl.menu.component.HvlButton.OnClickedCommand;
 import com.osreboot.ridhvl.menu.component.HvlComponentDrawable;
 import com.osreboot.ridhvl.menu.component.HvlDrawableComponent;
 import com.osreboot.ridhvl.menu.component.HvlLabel;
@@ -82,7 +82,7 @@ public class MenuManager {
 		main.add(new HvlArrangerBox.Builder().build());
 		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabel.Builder().setText("lost in chrome").build());
 		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabeledButton.Builder().setText("play").setClickedCommand(new HvlButtonMenuLink(levels)).build());
-		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabeledButton.Builder().setText("quit").setClickedCommand(new OnClickedCommand(){
+		main.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabeledButton.Builder().setText("quit").setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton arg0Arg){
 				System.exit(0);
@@ -91,7 +91,7 @@ public class MenuManager {
 		
 		levels.add(new HvlArrangerBox.Builder().build());
 		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabel.Builder().setText("levels").build());
-		levels.add(new HvlLabeledButton.Builder().setText("previous").setClickedCommand(new OnClickedCommand(){
+		levels.add(new HvlLabeledButton.Builder().setText("previous").setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton arg0Arg) {
 				if(Game.levels.indexOf(Game.getCurrentLevel()) <= 0) Game.setCurrentLevel(Game.levels.get(Game.levels.size() - 1));
@@ -99,7 +99,7 @@ public class MenuManager {
 				updateMinimap();
 			}
 		}).setX((Display.getWidth()/2) - 256 - 256 - 32).setY((Display.getHeight()/2) - 32).build());
-		levels.add(new HvlLabeledButton.Builder().setText("next").setClickedCommand(new OnClickedCommand(){
+		levels.add(new HvlLabeledButton.Builder().setText("next").setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton arg0Arg) {
 				if(Game.levels.indexOf(Game.getCurrentLevel()) + 1 >= Game.levels.size()) Game.setCurrentLevel(Game.levels.get(0));
@@ -121,7 +121,7 @@ public class MenuManager {
 			}
 		}));
 		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlSpacer(0, 512 + 16));
-		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabeledButton.Builder().setText("play").setClickedCommand(new OnClickedCommand(){
+		levels.getFirstChildOfType(HvlArrangerBox.class).add(new HvlLabeledButton.Builder().setText("play").setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton arg0Arg){
 				Game.initialize();
