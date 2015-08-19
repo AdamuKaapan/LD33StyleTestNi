@@ -40,7 +40,7 @@ public class MenuManager {
 
 		HvlComponentDefault.setDefault(new HvlLabel(font, "add text plz", Color.white, 2));
 		HvlArrangerBox defaultArranger = new HvlArrangerBox(Display.getWidth(), Display.getHeight(), ArrangementStyle.VERTICAL);
-		defaultArranger.setAlign(0.5f);
+		defaultArranger.setxAlign(0.5f);
 		defaultArranger.setBorderU(16);
 		defaultArranger.setBorderL(16);
 		HvlComponentDefault.setDefault(defaultArranger);
@@ -149,7 +149,7 @@ public class MenuManager {
 	}
 
 	private static void updateMinimap() {
-		displayMap = HvlLayeredTileMap.load(Game.getCurrentLevel(), true, HvlTemplateInteg2D.getTexture(Main.tilemapIndex), 0, 0, 64, 64);
+		displayMap = HvlLayeredTileMap.load(Game.getCurrentLevel(), true, 0, 0, 64, 64, HvlTemplateInteg2D.getTexture(Main.tilemapIndex));
 		displayMap.setTileWidth(512f / displayMap.getLayer(0).getMapWidth());
 		displayMap.setTileHeight(512f / displayMap.getLayer(0).getMapHeight());
 	}

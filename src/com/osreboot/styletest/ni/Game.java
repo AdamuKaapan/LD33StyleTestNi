@@ -72,7 +72,7 @@ public class Game {
 	}
 
 	public static void updateLevel() {
-		Game.map = HvlLayeredTileMap.load(currentLevel, true, HvlTemplateInteg2D.getTexture(Main.tilemapIndex), 0, 0, 64, 64);
+		Game.map = HvlLayeredTileMap.load(currentLevel, true, 0, 0, 64, 64, HvlTemplateInteg2D.getTexture(Main.tilemapIndex));
 
 		checkpoints = new HashMap<>();
 		for (int x = 0; x < map.getLayer(2).getMapWidth(); x++) {
