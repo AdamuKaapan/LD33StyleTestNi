@@ -41,7 +41,7 @@ public class Main extends HvlTemplateInteg2D {
 		
 		MenuManager.initialize();
 		HvlSongPlayer.addSong(MenuManager.main, getSound(1));
-		HvlSongPlayer.addMenuChild(MenuManager.main, MenuManager.levels);
+		HvlSongPlayer.addAllSongs(MenuManager.main, MenuManager.levels);
 		
 		HvlSongPlayer.addSong(MenuManager.game, getSound(0));
 	}
