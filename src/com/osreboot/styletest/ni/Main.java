@@ -1,9 +1,8 @@
 package com.osreboot.styletest.ni;
 
-import org.newdawn.slick.openal.SoundStore;
-
 import com.osreboot.ridhvl.display.collection.HvlDisplayModeDefault;
 import com.osreboot.ridhvl.menu.HvlMenu;
+import com.osreboot.ridhvl.menu.HvlSongPlayer;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Main extends HvlTemplateInteg2D {
@@ -32,25 +31,23 @@ public class Main extends HvlTemplateInteg2D {
 		getTextureLoader().loadResource("Checkpoint");
 		getTextureLoader().loadResource("Pointer");
 		
-		Game.setCurrentLevel("TestLevel");
-		Game.initialize();
-		
-		MenuManager.initialize();
-		
 		getSoundLoader().loadResource("Electric reign");
 		getSoundLoader().loadResource("Slide Velocity");
 		getSoundLoader().loadResource("Intro to electric regin");
 		getSoundLoader().loadResource("GateHit2");
+		
+		Game.setCurrentLevel("TestLevel");
+		Game.initialize();
+		
+		MenuManager.initialize();
+		HvlSongPlayer.addSong(MenuManager.main, getSound(1));
+		HvlSongPlayer.addMenuChild(MenuManager.main, MenuManager.levels);
+		
+		HvlSongPlayer.addSong(MenuManager.game, getSound(0));
 	}
 
 	@Override
 	public void update(float delta){
-		SoundStore.get().poll(0);
-		if(HvlMenu.getCurrent() != MenuManager.game){
-			if(!getSound(1).isPlaying()) getSound(1).playAsSoundEffect(1, 1, false);
-			if(getSound(0).isPlaying()) getSound(0).stop();
-		}
-		
 		MenuManager.update(delta);
 	}
 

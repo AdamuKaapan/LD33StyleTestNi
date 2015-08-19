@@ -100,16 +100,7 @@ public class Game {
 		reset();
 	}
 
-	public static void update(float delta) {
-		if (HvlTemplateInteg2D.getSound(1).isPlaying())
-			HvlTemplateInteg2D.getSound(1).stop();
-		if (time >= 0) {
-			if (!HvlTemplateInteg2D.getSound(0).isPlaying())
-				HvlTemplateInteg2D.getSound(0).playAsSoundEffect(1, 1, false);
-		} else if (time > preTime)
-			if (!HvlTemplateInteg2D.getSound(2).isPlaying())
-				HvlTemplateInteg2D.getSound(2).playAsSoundEffect(1, 1, false);
-
+	public static void update(float delta){
 		circleAngle += 90.0f * delta;
 
 		if (currentLap > requiredLaps)
